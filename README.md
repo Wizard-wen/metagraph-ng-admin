@@ -1,2 +1,1 @@
-# metagraph-ng-manager
-metagraph-ng-manager
+# metagraph-ng-admin
