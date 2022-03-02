@@ -1,0 +1,50 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card nzTitle="角色基本信息" *ngIf="adminRole && adminRole.name">
+    角色名： {{adminRole.name}}
+  </nz-card>
+  <nz-card nzTitle="配置角色路由权限">
+    <div nz-row>
+      <div nz-col nzSpan="6">
+        <nz-tree
+          #nzTreeComponent
+          [nzData]="adminRouterTree"
+          nzCheckable
+          (nzClick)="handleTreeNodeClickEvent($event)"
+          [nzCheckedKeys]="defaultCheckedKeys">
+        </nz-tree>
+        <button nz-button nzType="primary" (click)="updateRouterAuthOfRoleThenRefreshPage()">更新</button>
+      </div>
+      <div nz-col nzSpan="18">
+      </div>
+    </div>
+  </nz-card>
+  <nz-card nzTitle="配置角色接口权限">
+    <nz-transfer
+      [nzDataSource]="adminAPIAuthList"
+      [nzShowSelectAll]="false"
+      [nzRenderList]="[renderList, renderList]"
+      (nzChange)="changeAdminAPIStatusThenRefreshPage($event)">
+      <ng-template
+        #renderList
+        let-items
+        let-onItemSelect="onItemSelect">
+        <nz-table #t [nzData]="items" nzSize="small">
+          <thead>
+          <tr>
+            <th></th>
+            <th>接口名</th>
+            <th>接口地址</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of t.data">
+            <td [nzChecked]="data.checked" (nzCheckedChange)="onItemSelect(data)"></td>
+            <td>{{ data.title }}</td>
+            <td>{{ data.router }}</td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </ng-template>
+    </nz-transfer>
+  </nz-card>
+</nz-spin>

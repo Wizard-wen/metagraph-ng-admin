@@ -1,0 +1,27 @@
+<p>当前领域的父级是{{parentName}}</p>
+<form nz-form [formGroup]="kitForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">名称</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="请输入名称!">
+      <input id="name" nz-input formControlName="name" placeholder="请输入名称!">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="code">代码</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="请输入代码!">
+      <input id="code" nz-input formControlName="code" placeholder="请输入代码!">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="description">描述</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="请输入领域描述!">
+      <input id="description" nz-input formControlName="description" placeholder="请输入领域描述!">
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="closeDialog()">取 消</button>
+  <button nz-button nzType="primary" (click)="submitKitFormThenCloseDialog()">确 认</button>
+</div>

@@ -1,0 +1,8 @@
+<div *ngFor="let data of adminOperationAuthList">
+  {{data.name}}
+  <nz-switch [(ngModel)]="data.isSelected"></nz-switch>
+</div>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="closeDialog()">取消</button>
+  <button nz-button nzType="primary" (click)="submitAdminRoleOperationThenCloseDialog()">确认</button>
+</div>

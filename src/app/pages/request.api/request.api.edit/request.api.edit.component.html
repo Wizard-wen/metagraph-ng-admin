@@ -1,0 +1,133 @@
+<ng-container>
+  <nz-descriptions nzTitle="接口详情"></nz-descriptions>
+  <form nz-form [formGroup]='kitForm'>
+    <nz-form-item>
+      <nz-form-label [nzSpan]='5' nzRequired nzFor='name'>接口名称</nz-form-label>
+      <nz-form-control [nzSpan]='12' nzErrorTip='请输入接口名称!'>
+        <input id='name' nz-input formControlName='name' placeholder='请输入接口名称!'>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]='5' nzRequired nzFor='path'>请求地址</nz-form-label>
+      <nz-form-control [nzSpan]='12' nzErrorTip='请输入请求地址!'>
+        <input id='path' nz-input formControlName='path' placeholder='请输入请求地址!'>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]='5' nzRequired nzFor='type'>请求类型</nz-form-label>
+      <nz-form-control [nzSpan]='12' nzErrorTip='请选择请求类型!'>
+        <nz-select nzPlaceHolder='请选择请求类型' id='type' formControlName='type'>
+          <nz-option nzLabel='post' nzValue='post'></nz-option>
+          <nz-option nzLabel='get' nzValue='get'></nz-option>
+          <nz-option nzLabel='put' nzValue='put'></nz-option>
+          <nz-option nzLabel='delete' nzValue='delete'></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]='5' nzRequired nzFor='isAuth'>是否鉴权</nz-form-label>
+      <nz-form-control [nzSpan]='12' nzErrorTip='请选择是否需要鉴权!'>
+        <nz-select nzPlaceHolder='请选择是否需要鉴权' id='isAuth' formControlName='isAuth'>
+          <nz-option nzLabel='需要' [nzValue]='true'></nz-option>
+          <nz-option nzLabel='不需要' [nzValue]='false'></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]='5' nzRequired nzFor='role'>调用角色</nz-form-label>
+      <nz-form-control [nzSpan]='12' nzErrorTip='请选择调用角色!'>
+        <nz-select nzPlaceHolder='请选择调用角色' id='role' formControlName='role'>
+          <nz-option nzLabel='system' nzValue='system'></nz-option>
+          <nz-option nzLabel='admin' nzValue='admin'></nz-option>
+          <nz-option nzLabel='user' nzValue='user'></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]='5' nzRequired nzFor='description'>接口描述</nz-form-label>
+      <nz-form-control [nzSpan]='12' nzErrorTip='请输入接口描述!'>
+      <textarea rows='2' id='description' nz-input formControlName='description' placeholder='请输入接口描述!'>
+      </textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div style='margin-bottom: 50px;'>
+    <button nz-button nzType='primary' (click)='submitKitFormThenCloseDialog()'>
+      {{requestApiId ? '编辑' : '创建'}}
+    </button>
+    <button nz-button nzType='default' style='margin-left: 20px' (click)='goBack()'>返 回</button>
+  </div>
+</ng-container>
+
+<ng-template [ngIf]='requestApiId'>
+  <nz-descriptions nzTitle="接口字段"></nz-descriptions>
+  <button nz-button nzType='primary' (click)='addRequestApiField()'>创建字段</button>
+  <nz-table
+    #fileTable
+    [nzData]='requestApiParams'>
+    <thead>
+    <tr>
+      <th [nzAlign]="'center'">字段名</th>
+      <th [nzAlign]="'center'">字段类型</th>
+      <th [nzAlign]="'center'">是否必填</th>
+      <th [nzAlign]="'center'">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor='let data of fileTable.data'>
+      <td [nzAlign]="'center'">{{data.fieldName}}</td>
+      <td [nzAlign]="'center'">{{data.fieldType}}</td>
+      <td [nzAlign]="'center'">{{data.required}}</td>
+      <td [nzAlign]="'center'">
+        <nz-space>
+          <nz-space-item>
+            <button nz-button nzType='primary' (click)='addRequestApiField(data)'>编辑</button>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button nzType='danger' (click)='removeRequestApi(data)'>删除</button>
+          </nz-space-item>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</ng-template>
+
+<ng-template [ngIf]='requestApiId'>
+  <nz-descriptions nzTitle="接口测试用例"></nz-descriptions>
+  <button nz-button nzType='primary' (click)='testRequestApi()'>测试接口</button>
+  <nz-table
+    #fileTable
+    [nzData]='testData'>
+    <thead>
+    <tr>
+      <th
+        *ngFor='let item of requestApiParams'
+        [nzAlign]="'center'">{{item.fieldName}}</th>
+      <th [nzAlign]="'center'">是否通过</th>
+      <th [nzAlign]="'center'">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor='let data of fileTable.data'>
+      <td
+        *ngFor='let item of requestApiParams'
+        [nzAlign]="'center'">{{data.data[item.fieldName]}}</td>
+      <td [nzAlign]="'center'">
+        <nz-tag [nzColor]="data.isPass ? 'green' : 'red'">
+          {{data.isPass ? '是' : '否'}}
+        </nz-tag>
+      </td>
+      <td [nzAlign]="'center'">
+        <nz-space>
+          <nz-space-item>
+            <button nz-button nzType='primary' (click)='testApi()'>测试</button>
+          </nz-space-item>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</ng-template>
+
+

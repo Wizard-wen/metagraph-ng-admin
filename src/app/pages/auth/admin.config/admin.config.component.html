@@ -1,0 +1,41 @@
+<div style="min-height: 600px; padding: 20px;">
+  <form class="example-form" [formGroup]="adminForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="name">管理员名称</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="请输入管理员名称!">
+        <input id="name" nz-input formControlName="name" placeholder="请输入管理员名称!">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="password">密码</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="请输入密码!">
+        <input id="password" nz-input formControlName="password" placeholder="请输入密码!">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="isEnabled">是否可用</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="请选择是否可用!">
+        <nz-switch id="isEnabled"  formControlName="isEnabled"></nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="roleList">角色</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="请选择角色!">
+        <nz-select
+          id="roleList"
+          nzMode="multiple"
+          nzPlaceHolder="请选择管理员角色"
+          formControlName="roleList">
+          <nz-option *ngFor="let item of adminRoleList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row >
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary" (click)="submitAdminFormThenRefreshPage()">确 认</button>
+        <button style="margin-left: 12px" nz-button (click)="goBack()">返 回</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+

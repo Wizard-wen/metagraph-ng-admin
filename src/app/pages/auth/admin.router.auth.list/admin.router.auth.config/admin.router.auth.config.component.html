@@ -1,0 +1,67 @@
+<form nz-form [formGroup]="adminRouterAuthForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">路由名称</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input name!">
+      <input nz-input id="name" formControlName="name" placeholder="name"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="weight">权重排序</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input weight!">
+      <nz-input-number id="weight" [nzStep]="1" formControlName="weight"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="parentId">父路由</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please select Parent Router!">
+      <nz-select id="parentId" formControlName="parentId">
+        <nz-option *ngFor="let item of adminRouterAuthList" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="route">路由路径</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input router!">
+      <input nz-input id="route" formControlName="route" placeholder="route"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="iconClass">图标</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please Select your icon-class!">
+      <nz-select id="iconClass" formControlName="iconClass">
+        <nz-option *ngFor="let item of iconList" nzCustomContent [nzValue]="item" [nzLabel]="item">
+          <i nz-icon [nzType]="item" nzTheme="outline"></i>
+          {{item}}
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="router">是否展示</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input isShow!">
+      <nz-switch formControlName="isShow"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="route">是否路径地址</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input isRouteURL!">
+      <nz-switch formControlName="isRouteURL"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="isMenu">是否菜单</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input isMenu!">
+      <nz-switch formControlName="isMenu"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="description">描述</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="请输入描述!">
+      <input nz-input id="description" formControlName="description" placeholder="请输入描述"/>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="closeDialog()">取消</button>
+  <button nz-button nzType="primary" (click)="submitAdminRouterAuthFormThenCloseDialog()">确认</button>
+</div>

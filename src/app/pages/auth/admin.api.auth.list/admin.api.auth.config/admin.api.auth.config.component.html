@@ -1,0 +1,18 @@
+<form nz-form [formGroup]="adminAPIAuthForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">接口名</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="请输入接口名!">
+      <input nz-input id="name" formControlName="name" placeholder="请输入接口名"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="router">接口地址</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="请输入接口地址!">
+      <input nz-input id="router" formControlName="router" placeholder="请输入接口地址"/>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="closeDialog()">取消</button>
+  <button nz-button nzType="primary" (click)="submitAdminAPIAuthForm()">确认</button>
+</div>

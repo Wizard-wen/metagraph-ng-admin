@@ -1,0 +1,15 @@
+<nz-card>
+  <nz-upload
+    class="avatar-uploader"
+    nzName="avatar"
+    nzListType="picture-card"
+    [nzCustomRequest]="customRequestUploadHandler"
+    [nzShowUploadList]="false"
+    (nzChange)="handleUploadChange()">
+    <ng-container *ngIf="!fileImageUrl">
+      <i class="upload-icon" nz-icon [nzType]="uploadingStatus ? 'loading' : 'plus'"></i>
+      <div class="ant-upload-text">Upload</div>
+    </ng-container>
+    <img *ngIf="fileImageUrl" [src]="'https://file.songxiwen.com.cn/' + fileImageUrl" style="width: 100%" />
+  </nz-upload>
+</nz-card>

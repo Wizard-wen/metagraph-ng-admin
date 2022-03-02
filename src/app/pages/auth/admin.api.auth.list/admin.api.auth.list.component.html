@@ -1,0 +1,45 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="table-operations">
+    <button nz-button nzType="primary" (click)="openCreateOrUpdateAdminAPIAuthDialog()">创建接口权限</button>
+  </div>
+  <nz-table
+    #Table
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzData]="adminAPIAuthList"
+    [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="handlePageIndexChange($event)">
+    <thead>
+    <tr>
+      <th>接口名</th>
+      <th>接口地址</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of Table.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.route }}</td>
+      <td>
+        <nz-space>
+          <nz-space-item>
+            <button
+              nz-button
+              nzType="primary"
+              [nzDanger]="data.isEnabled"
+              (click)="openChangeAdminAPIAuthStatusConfirm(data, !data.isEnabled)">
+              {{data.isEnabled ? '停用' : '启用'}}
+            </button>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button nzType="primary" (click)="openCreateOrUpdateAdminAPIAuthDialog(data)">编辑</button>
+          </nz-space-item>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+

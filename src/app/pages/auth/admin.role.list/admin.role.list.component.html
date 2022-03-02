@@ -1,0 +1,46 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="table-operations">
+    <button nz-button nzType="primary" (click)="openCreateOrUpdateAdminRoleDialog()">创建角色</button>
+  </div>
+  <nz-table
+    #Table
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzData]="adminRouterList"
+    [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="handlePageIndexChange($event)">
+    <thead>
+    <tr>
+      <th>角色名</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of Table.data">
+      <td>{{ data.name }}</td>
+      <td>
+        <nz-space>
+          <nz-space-item>
+            <button
+              nz-button
+              nzType="primary"
+              [nzDanger]="data.isEnabled"
+              (click)="openChangeAdminRoleStatusDialog(data, !data.isEnabled)">
+              {{data.isEnabled ? '停用' : '启用'}}
+            </button>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button nzType="primary" (click)="openCreateOrUpdateAdminRoleDialog(data)">编 辑</button>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button nzType="primary" (click)="navigateToConfigAdminRolePage(data)">配 置</button>
+          </nz-space-item>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+

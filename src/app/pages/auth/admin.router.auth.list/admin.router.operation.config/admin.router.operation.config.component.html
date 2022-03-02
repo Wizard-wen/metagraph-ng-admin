@@ -1,0 +1,49 @@
+<nz-card>
+  <nz-descriptions nzTitle="Router Description" [nzColumn]="{ xs: 8, sm: 16, md: 24}">
+    <nz-descriptions-item nzTitle="RouterName">{{name}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="RouterUrl">{{route}}</nz-descriptions-item>
+  </nz-descriptions>
+</nz-card>
+<button class="button-style" nz-button (click)="addAdminRouterOperationItem()" nzType="primary">Add</button>
+<nz-table class="table-style" #adminRouterOperationTable nzBordered [nzData]="adminRouterOperationAuthList" [nzShowPagination]="false">
+  <thead>
+  <tr>
+    <th>Key</th>
+    <th>Name</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of adminRouterOperationTable.data" class="editable-row">
+    <td>
+      <input class="input-min-width" type="text" [disabled]="!data.isEnabled" nz-input [(ngModel)]="data.key"/>
+    </td>
+    <td>
+      <input class="input-min-width" type="text" [disabled]="!data.isEnabled" nz-input [(ngModel)]="data.name"/>
+    </td>
+    <td>
+      <nz-space>
+        <nz-space-item>
+          <a nz-popconfirm
+             nzPopconfirmTitle="Sure to change?"
+             (nzOnConfirm)="changeAdminRouterOperationStatusAndRefreshList(data, !data.isEnabled)">
+            {{data.isEnabled ? '停用' : '启用'}}
+          </a>
+        </nz-space-item>
+        <nz-space-item>
+          <a nz-popconfirm
+             nzPopconfirmTitle="Sure to save?"
+             *ngIf="data.id && data.isEnabled"
+             (nzOnConfirm)="saveAdminRouterOperationItemAndRefreshList(data)">保存</a>
+        </nz-space-item>
+        <nz-space-item>
+          <a nz-popconfirm
+             nzPopconfirmTitle="Sure to create?"
+             *ngIf="!data.id"
+             (nzOnConfirm)="createAdminRouterOperationItemAndRefreshList(data)">创建</a>
+        </nz-space-item>
+      </nz-space>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

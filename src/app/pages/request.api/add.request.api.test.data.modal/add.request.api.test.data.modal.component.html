@@ -1,0 +1,52 @@
+<nz-descriptions nzTitle='接口详情' [nzColumn]='1'>
+  <nz-descriptions-item nzTitle='地址'>{{baseUrl}}{{path}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle='是否需要鉴权'>{{isAuth}}</nz-descriptions-item>
+</nz-descriptions>
+<ng-template [ngIf]='params.length'>
+  <nz-descriptions nzTitle='请求体表单'></nz-descriptions>
+  <form nz-form [formGroup]='form'>
+    <nz-form-item *ngFor='let item of params'>
+      <nz-form-label [nzSpan]='5' [nzRequired]='item.required' [nzFor]='item.fieldName'>{{item.fieldName}}</nz-form-label>
+      <nz-form-control [nzSpan]='12' nzErrorTip='请输入字段名!'>
+      <textarea
+        *ngIf="item.fieldType === 'array' || item.fieldType === 'object'"
+        rows='6' [id]='item.fieldName'
+        nz-input [formControlName]='item.fieldName' placeholder='请输入字段名!'>
+      </textarea>
+        <input
+          *ngIf="item.fieldType === 'string'" [id]='item.fieldName'
+          nz-input [formControlName]='item.fieldName' placeholder='请输入字段名!' />
+        <nz-date-picker
+          *ngIf="item.fieldType === 'Date'" [id]='item.fieldName'
+          [formControlName]='item.fieldName'
+        ></nz-date-picker>
+        <nz-input-number
+          *ngIf="item.fieldType === 'number'"
+          [id]='item.fieldName' [formControlName]='item.fieldName'
+          [nzMin]='1' [nzMax]='10' [nzStep]='0.1' [nzPlaceHolder]="'Digital'"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+<ng-template [ngIf]='params.length'>
+  <nz-descriptions nzTitle='请求体预览'></nz-descriptions>
+  <ngx-json-view [data]='form?.getRawValue()'></ngx-json-view>
+</ng-template>
+<ng-template [ngIf]='isAuth'>
+  <nz-descriptions nzTitle='测试账户(鉴权)'></nz-descriptions>
+  <nz-select nzPlaceHolder='请选择鉴权测试账户' [(ngModel)]='accountId'>
+    <nz-option
+      *ngFor='let item of accountList'
+      [nzLabel]='item.name'
+      [nzValue]='item.id'></nz-option>
+  </nz-select>
+</ng-template>
+<ng-container>
+  <nz-descriptions *ngIf='responseData' nzTitle='接口返回值'></nz-descriptions>
+  <ngx-json-view *ngIf='responseData' [data]='responseData'></ngx-json-view>
+</ng-container>
+<div *nzModalFooter>
+  <button nz-button nzType='default' (click)='closeDialog()'>取 消</button>
+  <button nz-button nzType='primary' (click)='testApi()'>测试</button>
+  <button nz-button nzType='primary' *ngIf='params.length' (click)='saveAsTestData()'>保存为测试数据</button>
+</div>

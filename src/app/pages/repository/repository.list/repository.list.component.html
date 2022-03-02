@@ -1,0 +1,74 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="table-operations">
+  </div>
+  <form style="margin-left: 8px" nz-form [nzLayout]="'inline'" [formGroup]="kitFilterForm">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-select style="width: 200px" nzPlaceHolder="分类" id="type" formControlName="type">
+          <nz-option nzValue="public" nzLabel="公开"></nz-option>
+          <nz-option nzValue="private" nzLabel="私有"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" style="margin: 0;" (click)="setKitListByKitFilterForm()">搜 索</button>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button style="margin: 0" (click)="cleanFilterFormThenRefresh()">重 置</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <nz-table
+    #fileTable
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzData]="kitList"
+    [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="handlePageIndexChange($event)">
+    <thead>
+    <tr>
+      <th [nzAlign]="'center'">知识库名</th>
+      <th [nzAlign]="'center'">是否克隆</th>
+      <th [nzAlign]="'center'">点赞量</th>
+      <th [nzAlign]="'center'">评论量</th>
+      <th [nzAlign]="'center'">作者</th>
+      <th [nzAlign]="'center'">创建于</th>
+      <th [nzAlign]="'center'">更新于</th>
+      <th [nzAlign]="'center'">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of fileTable.data">
+      <td [nzAlign]="'center'">{{data.content.name}}</td>
+      <td [nzAlign]="'center'">{{data.content.cloneFromRepositoryEntityId ? '是' : '否'}}</td>
+      <td [nzAlign]="'center'">{{data.star}}</td>
+      <td [nzAlign]="'center'">{{data.comment}}</td>
+      <td [nzAlign]="'center'">{{data.author.name}}</td>
+      <td [nzAlign]="'center'">{{data.content.createdAt | date:'y-M-d hh:mm'}}</td>
+      <td [nzAlign]="'center'">{{data.content.updatedAt | date:'y-M-d hh:mm'}}</td>
+      <td [nzAlign]="'center'">
+        <nz-space>
+          <nz-space-item>
+            <button nz-button nzType="primary" (click)="goUserDetailPage(data)">编辑</button>
+          </nz-space-item>
+          <nz-space-item>
+            <button
+              nz-button
+              nzType="primary"
+              [nzDanger]="!data.isForbidden"
+              (click)="openChangeKitStatusDialog(data, !data.isForbidden)">
+              {{data.isForbidden ? '启用' : '停用'}}
+            </button>
+          </nz-space-item>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+

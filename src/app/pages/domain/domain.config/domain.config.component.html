@@ -1,0 +1,14 @@
+<button nz-button (click)="addChildDomain()">添加顶级领域</button>
+<nz-tree
+  #nzTreeComponent
+  [nzData]="domainTree"
+  (nzClick)="handleTreeNodeClickEvent($event)"
+  [nzCheckedKeys]="defaultCheckedKeys"
+  [nzTreeTemplate]="nzTreeTemplate">
+</nz-tree>
+<ng-template #nzTreeTemplate let-node let-origin="origin">
+  <span class="folder-name">{{ node.title }} - {{origin.code}}</span>
+  <button nz-button nzType="link" (click)="addChildDomain(origin)">添加子级</button>
+  <button nz-button nzType="link" (click)="addChildDomain(origin, true)">修改</button>
+  <button nz-button nzType="link" (click)='remove(origin)'>删除</button>
+</ng-template>

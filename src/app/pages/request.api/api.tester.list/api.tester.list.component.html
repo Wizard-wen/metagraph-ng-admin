@@ -1,0 +1,74 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="table-operations">
+
+  </div>
+  <form style="margin-left: 8px" nz-form [nzLayout]="'inline'" [formGroup]="kitFilterForm">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-select style="width: 200px" nzPlaceHolder="账户分类" id="type" formControlName="type">
+          <nz-option nzValue="admin" nzLabel="admin"></nz-option>
+          <nz-option nzValue="user" nzLabel="user"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" style="margin: 0;" (click)="setKitListByKitFilterForm()">搜 索</button>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button style="margin: 0" (click)="cleanFilterFormThenRefresh()">重 置</button>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" style="margin: 0" (click)="goCreatePage()">创建</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <nz-table
+    #fileTable
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzData]="kitList"
+    [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="handlePageIndexChange($event)">
+    <thead>
+    <tr>
+      <th [nzAlign]="'center'">类型</th>
+      <th [nzAlign]="'center'">name</th>
+      <th [nzAlign]="'center'">创建于</th>
+      <th [nzAlign]="'center'">更新于</th>
+      <th [nzAlign]="'center'">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of fileTable.data">
+      <td [nzAlign]="'center'">{{data.type}}</td>
+      <td [nzAlign]="'center'">{{data.name}}</td>
+      <td [nzAlign]="'center'">{{data.createdAt | date:'y-M-d hh:mm'}}</td>
+      <td [nzAlign]="'center'">{{data.updatedAt | date:'y-M-d hh:mm'}}</td>
+      <td [nzAlign]="'center'">
+        <nz-space>
+          <nz-space-item>
+            <button nz-button nzType="primary" (click)="goUserDetailPage(data)">编辑</button>
+          </nz-space-item>
+<!--          <nz-space-item>-->
+<!--            <button-->
+<!--              nz-button-->
+<!--              nzType="primary"-->
+<!--              [nzDanger]="!data.isForbidden"-->
+<!--              (click)="openChangeKitStatusDialog(data, !data.isForbidden)">-->
+<!--              {{data.isForbidden ? '启用' : '停用'}}-->
+<!--            </button>-->
+<!--          </nz-space-item>-->
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+

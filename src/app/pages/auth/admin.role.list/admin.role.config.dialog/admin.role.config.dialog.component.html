@@ -1,0 +1,12 @@
+<form nz-form [formGroup]="adminRoleForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Name</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input role name!">
+      <input nz-input id="name" formControlName="name" placeholder="name"/>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="closeDialog()">Cancel</button>
+  <button nz-button nzType="primary" (click)="submitAdminRoleFormThenCloseDialog()">Confirm</button>
+</div>

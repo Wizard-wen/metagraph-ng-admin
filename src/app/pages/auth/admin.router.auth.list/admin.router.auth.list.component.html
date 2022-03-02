@@ -1,0 +1,71 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="table-operations">
+    <button nz-button nzType="primary" (click)="openCreateOrUpdateAdminRouterAuthDialog()">创建路由权限</button>
+  </div>
+  <nz-table
+    #Table
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzData]="adminRouterList"
+    [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="handlePageIndexChange($event)">
+    <thead>
+    <tr>
+      <th>路由名称</th>
+      <th>路由地址</th>
+      <th>图标</th>
+      <th>是否展示</th>
+      <th>是否是页面</th>
+      <th>是否是菜单</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of Table.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.route }}</td>
+      <td>
+        <i *ngIf="data.iconClass"
+           nz-icon [nzType]="data.iconClass"></i>
+      </td>
+      <td>
+        <nz-tag [nzColor]="data.isShow ? 'green' : 'red'">
+          {{data.isShow ? '是' : '否'}}
+        </nz-tag>
+      </td>
+      <td>
+        <nz-tag [nzColor]="data.isRouteURL ? 'green' : 'red'">
+          {{data.isRouteURL ? '是' : '否'}}
+        </nz-tag>
+      </td>
+      <td>
+        <nz-tag [nzColor]="data.isMenu ? 'green' : 'red'">
+          {{data.isMenu ? '是' : '否'}}
+        </nz-tag>
+      </td>
+      <td>
+        <nz-space>
+          <nz-space-item>
+            <button
+              nz-button
+              nzType="primary"
+              [nzDanger]="data.isEnabled"
+              (click)="openChangeAdminRouterAuthStatusDialog(data, !data.isEnabled)">
+              {{data.isEnabled ? '停用' : '启用'}}
+            </button>
+          </nz-space-item>
+          <nz-space-item>
+            <button nz-button nzType="primary" (click)="openCreateOrUpdateAdminRouterAuthDialog(data)">编辑</button>
+          </nz-space-item>
+          <nz-space-item *ngIf="data.isRouteURL">
+            <button nz-button nzType="primary" (click)="openConfigAdminRouterOperationAuthDialog(data)">配置</button>
+          </nz-space-item>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+

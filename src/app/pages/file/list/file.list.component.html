@@ -1,0 +1,59 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="table-operations">
+    <button nz-button nzType="primary" (click)="openCreateFileDialog()">创建文件</button>
+    文件总数{{total}} 文件总量{{formatBytes(totalSize)}}
+  </div>
+  <nz-table
+    #fileTable
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzData]="fileList"
+    [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="handlePageIndexChange($event)">
+    <thead>
+    <tr>
+      <th>fileKey</th>
+      <th>大小</th>
+      <th>资源类型</th>
+      <th>MIMETYPE</th>
+      <th>name</th>
+      <th>状态</th>
+      <th [nzAlign]="'center'">创建于</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of fileTable.data">
+      <td>{{data.key}}</td>
+      <td>{{formatBytes(data.size)}}</td>
+      <td>{{data.type}}</td>
+      <td>{{data.mimeType}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.isdeleted ? '已删除' : '存在'}}</td>
+      <td [nzAlign]="'center'">
+        {{data.createdAt | date:'y-M-d hh:mm'}}
+      </td>
+      <td>
+        <nz-space>
+          <nz-space-item>
+            <button *ngIf="!data.deleted" nz-button nzType="primary" nzDanger (click)="openRemoveFileDialog(data)">删 除</button>
+          </nz-space-item>
+        </nz-space>
+        <nz-space>
+          <nz-space-item>
+            <button nz-button nzType="primary" (click)="openTestFileIsExistsDialog(data)">测 试</button>
+          </nz-space-item>
+        </nz-space>
+        <nz-space>
+          <nz-space-item>
+            <button *ngIf="!data.deleted" nz-button nzType="primary" (click)="openPreviewFileDialog(data)">预 览</button>
+          </nz-space-item>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+

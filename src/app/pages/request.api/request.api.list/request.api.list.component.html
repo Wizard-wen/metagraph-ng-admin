@@ -1,0 +1,89 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="table-operations">
+
+  </div>
+  <form style="margin-left: 8px" nz-form [nzLayout]="'inline'" [formGroup]="kitFilterForm">
+    <nz-form-item>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input id="path" formControlName="path" placeholder="请输入地址"/>
+      </nz-form-control>
+      <nz-form-control>
+        <nz-select style="width: 200px" nzPlaceHolder="接口分类" id="type" formControlName="type">
+          <nz-option nzValue="get" nzLabel="get"></nz-option>
+          <nz-option nzValue="post" nzLabel="post"></nz-option>
+          <nz-option nzValue="delete" nzLabel="delete"></nz-option>
+          <nz-option nzValue="put" nzLabel="put"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" style="margin: 0;" (click)="setKitListByKitFilterForm()">搜 索</button>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button style="margin: 0" (click)="cleanFilterFormThenRefresh()">重 置</button>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" style="margin: 0" (click)="goCreatePage()">创建</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <nz-table
+    #fileTable
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzData]="kitList"
+    [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="handlePageIndexChange($event)">
+    <thead>
+    <tr>
+      <th [nzAlign]="'center'">接口名称</th>
+      <th [nzAlign]="'center'">接口地址</th>
+      <th [nzAlign]="'center'">类型</th>
+      <th [nzAlign]="'center'">是否鉴权</th>
+      <th [nzAlign]="'center'">应用角色</th>
+      <th [nzAlign]="'center'">创建于</th>
+      <th [nzAlign]="'center'">更新于</th>
+      <th [nzAlign]="'center'">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of fileTable.data">
+      <td [nzAlign]="'center'">{{data.name}}</td>
+      <td [nzAlign]="'center'">{{data.path}}</td>
+      <td [nzAlign]="'center'">{{data.type}}</td>
+      <td [nzAlign]="'center'">
+        <nz-tag [nzColor]="data.isAuth ? 'red' : 'green'">
+          {{data.isAuth ? '是' : '否'}}
+        </nz-tag>
+      </td>
+      <td [nzAlign]="'center'">{{data.role}}</td>
+      <td [nzAlign]="'center'">{{data.createdAt | date:'y-M-d hh:mm'}}</td>
+      <td [nzAlign]="'center'">{{data.updatedAt | date:'y-M-d hh:mm'}}</td>
+      <td [nzAlign]="'center'">
+        <nz-space>
+          <nz-space-item>
+            <button nz-button nzType="primary" (click)="goUserDetailPage(data)">编辑</button>
+          </nz-space-item>
+<!--          <nz-space-item>-->
+<!--            <button-->
+<!--              nz-button-->
+<!--              nzType="primary"-->
+<!--              [nzDanger]="!data.isForbidden"-->
+<!--              (click)="openChangeKitStatusDialog(data, !data.isForbidden)">-->
+<!--              {{data.isForbidden ? '启用' : '停用'}}-->
+<!--            </button>-->
+<!--          </nz-space-item>-->
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+

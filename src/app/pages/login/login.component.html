@@ -1,0 +1,29 @@
+<div class="loginPage">
+  <nz-card class="login-card">
+    <div class="logo-card">
+      <img class="logo" [src]="'assets/images/hogwarts-logo.webp'" alt="">
+    </div>
+<!--    <div style="text-align: center">Metagraph</div>-->
+    <div style="text-align: center; line-height: 50px;margin-bottom: 50px;font-size: 25px">Metagraph后台管理系统</div>
+    <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="loginThenNavigateToNewPage()">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="请输入用户名!">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="name" placeholder="请输入用户名" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="请输入密码!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="请输入密码" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">登 录</button>
+    </form>
+  </nz-card>
+</div>
+
+
+

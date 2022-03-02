@@ -1,0 +1,51 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div class="table-operations">
+    <button
+      nz-button
+      nzType="primary"
+      (click)="navigateToCreateAdminPage()">创建管理员</button>
+  </div>
+  <nz-table
+    #Table
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzData]="adminList"
+    [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="handlePageIndexChange($event)">
+    <thead>
+    <tr>
+      <th>管理员名</th>
+      <th>是否可用</th>
+      <th>角色</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of Table.data">
+      <td>{{ data.name }}</td>
+      <td>
+        <nz-tag [nzColor]="data.isEnabled ? 'green' : 'red'">
+          {{data.isEnabled ? '是' : '否'}}
+        </nz-tag>
+      </td>
+      <td>
+        <nz-space>
+          <nz-space-item *ngFor="let item of data.roleList">
+            <nz-tag>{{item.name}}</nz-tag>
+          </nz-space-item>
+        </nz-space>
+      </td>
+      <td>
+        <nz-space>
+          <nz-space-item>
+            <button *ngIf="!data.isSuperAdmin" nz-button nzType="primary" (click)="navigateToConfigAdminPage(data)">配置</button>
+          </nz-space-item>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+
