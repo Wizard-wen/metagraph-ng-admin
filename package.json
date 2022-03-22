@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port $port --proxy-config $proxyConfig",
-    "dev": "ng serve --host 0.0.0.0 --disableHostCheck --port 4089 --proxy-config proxy.conf.json",
+    "dev": "ng serve --host 0.0.0.0 --disableHostCheck --port 34089 --proxy-config proxy.conf.json",
     "build": "ng build --prod --aot --output-hashing all --base-href ./ ",
     "test": "ng test",
     "lint": "ng lint",
