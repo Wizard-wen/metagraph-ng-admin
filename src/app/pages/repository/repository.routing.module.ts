@@ -6,6 +6,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../../common/guard/auth.guard';
+import { RepositoryDetailComponent } from './repository-detail/repository-detail.component';
 import { RepositoryComponent } from './repository.component';
 import { RepositoryListComponent } from './repository.list/repository.list.component';
 
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'repositoryList',
         component: RepositoryListComponent
+      },
+      {
+        path: 'detail',
+        component: RepositoryDetailComponent
       }
     ]
   }

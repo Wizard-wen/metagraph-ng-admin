@@ -1,0 +1,56 @@
+<div class='site-page-header-ghost-wrapper'>
+  <nz-page-header nzBackIcon [nzGhost]='false'>
+    <nz-page-header-title>{{userDetail?.user.name}}</nz-page-header-title>
+    <nz-page-header-subtitle>{{userDetail?.user.email}}</nz-page-header-subtitle>
+    <nz-page-header-extra>
+
+      <button nz-button>Operation</button>
+
+      <button
+        nz-button
+        (click)='changeUserStatus(!userDetail?.user.isForbidden)'
+        [nzType]="userDetail?.user.isForbidden ? 'primary' : 'danger'">
+        {{userDetail?.user.isForbidden ? '启用' : '停用'}}
+      </button>
+      <button nz-button nzType='primary'>Primary</button>
+    </nz-page-header-extra>
+    <nz-page-header-content>
+      <nz-descriptions nzSize='small' [nzColumn]='3'>
+        <nz-descriptions-item nzTitle='手机号码' [nzSpan]='1'>
+          {{userDetail?.user.phone}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle='微信号码' [nzSpan]='1'>
+          {{userDetail?.user.wechat}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle='邮箱' [nzSpan]='1'>
+          {{userDetail?.user.email}}
+          <nz-tag style='margin-left: 10px'>
+            {{userDetail?.user.isBindEmail ? '已认证' : '未认证'}}
+          </nz-tag>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle='所属公司' [nzSpan]='1'>{{userDetail?.user.company}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle='注册时间'
+                              [nzSpan]='1'>{{userDetail?.user.createdAt |date:'y-M-d hh:mm' }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle='所属地' [nzSpan]='1'>{{userDetail?.user.location}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle='个人网站' [nzSpan]='2'>
+          <a>{{userDetail?.user.personalWebsite}}</a>
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </nz-page-header-content>
+  </nz-page-header>
+  <nz-card nzTitle='资源用量' style='margin-bottom: 30px;'>
+    <nz-descriptions nzSize='small' [nzColumn]='3'>
+      <nz-descriptions-item nzTitle='资源总量' [nzSpan]='1'>
+        {{userDetail?.file.total}}
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </nz-card>
+
+  <nz-card nzTitle='知识库'>
+    <nz-descriptions nzSize='small' [nzColumn]='3'>
+      <nz-descriptions-item nzTitle='资源总量' [nzSpan]='1'>
+        {{userDetail?.file.total}}
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </nz-card>
+</div>

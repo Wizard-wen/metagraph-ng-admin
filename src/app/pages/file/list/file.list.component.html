@@ -1,16 +1,34 @@
-<nz-spin [nzSpinning]="isLoading">
-  <div class="table-operations">
-    <button nz-button nzType="primary" (click)="openCreateFileDialog()">创建文件</button>
-    文件总数{{total}} 文件总量{{formatBytes(totalSize)}}
+<nz-spin [nzSpinning]='isLoading'>
+  <div class='table-operations'>
+    <div class='operation-head'>
+      <button nz-button nzType='primary' (click)='openCreateFileDialog()'>创建文件</button>
+      <div>
+        <span>文件总数: {{total}}</span>
+        <span>文件总量: {{totalSize | customSize}}</span>
+      </div>
+    </div>
+    <input nz-input [(ngModel)]="userId" placeholder="请输入用户id"/>
+    <nz-select
+      [nzPlaceHolder]='"请选择来源"'
+      [(ngModel)]='provider' [nzOptions]='providerList'></nz-select>
+    <nz-select
+      [nzPlaceHolder]='"请选择用户类型"'
+      [(ngModel)]='accountType' [nzOptions]='userTypeList'></nz-select>
+    <nz-select
+      [nzPlaceHolder]='"请选择资源类型"'
+      [(ngModel)]='fileType' [nzOptions]='fileTypeList'></nz-select>
+    <button nz-button nzType='primary' (click)='searchFileList()'>筛选</button>
+    <button nz-button nzType='primary' (click)='clear()'>重置</button>
   </div>
   <nz-table
     #fileTable
-    [nzFrontPagination]="false"
-    [nzTotal]="total"
-    [nzData]="fileList"
-    [nzPageIndex]="pageIndex"
-    [nzPageSize]="pageSize"
-    (nzPageIndexChange)="handlePageIndexChange($event)">
+    [nzFrontPagination]='false'
+    [nzWidthConfig]='widthConfig'
+    [nzTotal]='total'
+    [nzData]='fileList'
+    [nzPageIndex]='pageIndex'
+    [nzPageSize]='pageSize'
+    (nzPageIndexChange)='handlePageIndexChange($event)'>
     <thead>
     <tr>
       <th>fileKey</th>
@@ -24,7 +42,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of fileTable.data">
+    <tr *ngFor='let data of fileTable.data'>
       <td>{{data.key}}</td>
       <td>{{formatBytes(data.size)}}</td>
       <td>{{data.type}}</td>
@@ -37,17 +55,18 @@
       <td>
         <nz-space>
           <nz-space-item>
-            <button *ngIf="!data.deleted" nz-button nzType="primary" nzDanger (click)="openRemoveFileDialog(data)">删 除</button>
+            <button *ngIf='!data.deleted' nz-button nzType='primary' nzDanger (click)='openRemoveFileDialog(data)'>删 除
+            </button>
           </nz-space-item>
         </nz-space>
         <nz-space>
           <nz-space-item>
-            <button nz-button nzType="primary" (click)="openTestFileIsExistsDialog(data)">测 试</button>
+            <button nz-button nzType='primary' (click)='openTestFileIsExistsDialog(data)'>测 试</button>
           </nz-space-item>
         </nz-space>
         <nz-space>
           <nz-space-item>
-            <button *ngIf="!data.deleted" nz-button nzType="primary" (click)="openPreviewFileDialog(data)">预 览</button>
+            <button *ngIf='!data.deleted' nz-button nzType='primary' (click)='openPreviewFileDialog(data)'>预 览</button>
           </nz-space-item>
         </nz-space>
       </td>

@@ -5,9 +5,9 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FileEnum } from 'metagraph-constant';
+import { AccountEnum, FileEnum, FileProvider } from 'metagraph-constant';
 import type {
-  FilePageListResponseType, FileResponseType, QiniuFileStatType
+  FileModelType, FilePageListResponseType, QiniuFileStatType
 } from 'metagraph-constant';
 import { ApiPathEnum } from './config/api.enum';
 import { PublicApiResponseType } from './config/api.type';
@@ -22,9 +22,9 @@ export class FileApiService {
   async getFileList(requestBody: {
     pageIndex: number;
     pageSize: number;
-  }): Promise<PublicApiResponseType<FileResponseType[]>> {
+  }): Promise<PublicApiResponseType<FileModelType[]>> {
     return this.http
-      .post<PublicApiResponseType<FileResponseType[]>>(ApiPathEnum.GetFileList, requestBody)
+      .post<PublicApiResponseType<FileModelType[]>>(ApiPathEnum.GetFileList, requestBody)
       .toPromise();
   }
 
@@ -32,6 +32,9 @@ export class FileApiService {
     pageIndex: number;
     pageSize: number;
     isDeleted?: boolean;
+    provider?: FileProvider;
+    accountType?: 'admin' | 'user'
+    userId?: string
   }): Promise<PublicApiResponseType<FilePageListResponseType>> {
     return this.http
       .post<PublicApiResponseType<FilePageListResponseType>>(ApiPathEnum.GetFilePageList, requestBody)
@@ -57,16 +60,16 @@ export class FileApiService {
   async getTotalSize(): Promise<PublicApiResponseType<{ total: number }>> {
     return this.http
       .get<PublicApiResponseType<{
-        total: number
-      }>>(ApiPathEnum.GetTotalSize)
+      total: number
+    }>>(ApiPathEnum.GetTotalSize)
       .toPromise();
   }
 
   async getFileById(requestBody: {
     id: string;
-  }): Promise<PublicApiResponseType<FileResponseType>> {
+  }): Promise<PublicApiResponseType<FileModelType>> {
     return this.http
-      .post<PublicApiResponseType<FileResponseType>>(ApiPathEnum.GetFileById, requestBody)
+      .post<PublicApiResponseType<FileModelType>>(ApiPathEnum.GetFileById, requestBody)
       .toPromise();
   }
 

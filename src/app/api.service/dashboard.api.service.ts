@@ -29,7 +29,7 @@ export class DashboardApiService {
       repository: number,
       file: number,
       knowledge: number,
-        fileTotalSize: number
+      fileTotalSize: number
     }>>(ApiPathEnum.GetSystemDashboard, {})
       .toPromise();
   }

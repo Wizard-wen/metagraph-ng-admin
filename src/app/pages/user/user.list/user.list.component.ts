@@ -122,7 +122,11 @@ export class UserListComponent implements OnInit {
   }
 
   async goUserDetailPage(item: UserModelType) {
-    // todo
+    await this.router.navigate(['/pages/user/userDetail'], {
+      queryParams: {
+        id: item.id
+      }
+    });
   }
 
   async ngOnInit(): Promise<void> {

@@ -6,7 +6,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { EntityCompletelyListItemType, TagModelType } from 'metagraph-constant';
+import type { EntityCompletelyListItemType } from 'metagraph-constant';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { RepositoryApiService } from '../../../api.service';
 
@@ -16,7 +16,7 @@ import { RepositoryApiService } from '../../../api.service';
   styleUrls: ['./repository.list.component.scss']
 })
 export class RepositoryListComponent implements OnInit {
-  kitList: EntityCompletelyListItemType[] = [];
+  repositoryList: EntityCompletelyListItemType[] = [];
 
   isLoading = false;
 
@@ -26,7 +26,7 @@ export class RepositoryListComponent implements OnInit {
 
   total = 0;
 
-  kitFilterForm = this.formBuilder.group({
+  repositoryFilterForm = this.formBuilder.group({
     type: [''],
     name: ['']
   });
@@ -47,25 +47,25 @@ export class RepositoryListComponent implements OnInit {
         page: 1
       }
     });
-    await this.setKitList(1, 10, {
-      type: this.kitFilterForm.value.type,
-      name: this.kitFilterForm.value.name
+    await this.setRepositoryList(1, 10, {
+      type: this.repositoryFilterForm.value.type,
+      name: this.repositoryFilterForm.value.name
     });
   }
 
   async cleanFilterFormThenRefresh(): Promise<void> {
-    await this.kitFilterForm.reset();
+    await this.repositoryFilterForm.reset();
     await this.router.navigate(['/pages/repository/repositoryList'], {
       queryParams: {
         page: 1
       }
     });
-    await this.setKitList(1, 10, {
-      type: this.kitFilterForm.value.type
+    await this.setRepositoryList(1, 10, {
+      type: this.repositoryFilterForm.value.type
     });
   }
 
-  async setKitList(
+  async setRepositoryList(
     page = 1,
     pageSize = 10,
     filter?: {
@@ -82,7 +82,7 @@ export class RepositoryListComponent implements OnInit {
       ...filter
     });
     if (response.data) {
-      this.kitList = response.data.list;
+      this.repositoryList = response.data.list;
       this.total = response.data.total;
     }
     this.isLoading = false;
@@ -95,13 +95,13 @@ export class RepositoryListComponent implements OnInit {
         page
       }
     });
-    await this.setKitList(page, 10, {
-      type: this.kitFilterForm.value.type
+    await this.setRepositoryList(page, 10, {
+      type: this.repositoryFilterForm.value.type
     });
   }
 
   async openChangeKitStatusDialog(
-    data: TagModelType,
+    data: EntityCompletelyListItemType,
     status: boolean
   ): Promise<void> {
     const title = status ? '启用' : '停用';
@@ -112,8 +112,12 @@ export class RepositoryListComponent implements OnInit {
     });
   }
 
-  async goUserDetailPage(item: TagModelType) {
-    // todo
+  async goUserDetailPage(item: EntityCompletelyListItemType) {
+    await this.router.navigate(['/pages/repository/detail'], {
+      queryParams: {
+        repositoryEntityId: item.entity.id
+      }
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -122,8 +126,8 @@ export class RepositoryListComponent implements OnInit {
         page: 1
       }
     });
-    await this.setKitList(1, 10, {
-      type: this.kitFilterForm.value.type
+    await this.setRepositoryList(1, 10, {
+      type: this.repositoryFilterForm.value.type
     });
   }
 }

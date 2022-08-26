@@ -6,7 +6,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NzInputNumberModule } from 'ng-zorro-antd';
+import { NzDescriptionsModule, NzInputNumberModule, NzPageHeaderModule } from 'ng-zorro-antd';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
@@ -22,6 +22,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { RepositoryDetailComponent } from './repository-detail/repository-detail.component';
 import { RepositoryRoutingModule } from './repository.routing.module';
 import { RepositoryComponent } from './repository.component';
 import { RepositoryListComponent } from './repository.list/repository.list.component';
@@ -50,10 +51,13 @@ const nzModules = [
     ...nzModules,
     CommonModule,
     ReactiveFormsModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    NzPageHeaderModule,
+    NzDescriptionsModule
   ],
   declarations: [
     RepositoryComponent,
+    RepositoryDetailComponent,
     RepositoryListComponent
   ]
 })

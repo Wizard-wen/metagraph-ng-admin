@@ -9,6 +9,7 @@ export enum ApiPathEnum {
   GetPullRequestDetail = '/admin/pull/request/detail',
   // user
   GetUserList = '/api/admin/account/user/getList',
+  GetUserDetail = '/api/admin/account/user/getDetail',
   // domain
   GetDomainList = '/api/admin/domain/getList',
   CreateDomain = '/api/admin/domain/create',
@@ -39,6 +40,7 @@ export enum ApiPathEnum {
   GetSystemDashboard = '/api/admin/dashboard/getSystemDashboard',
   // repository
   GetRepositoryPageList = '/api/admin/repository/getPageList',
+  GetRepository = '/api/admin/repository/get',
   // system
   TestRequestApi = '/api/system/requestAPI/testApi',
   CreateRequestApi = '/api/system/requestAPI/create',

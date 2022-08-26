@@ -32,4 +32,13 @@ export class RepositoryApiService {
     }>>(ApiPathEnum.GetRepositoryPageList, requestBody)
       .toPromise();
   }
+
+  async get(requestBody: {
+    repositoryEntityId: string
+  }): Promise<PublicApiResponseType<EntityCompletelyListItemType>> {
+    return this.http
+      .post<PublicApiResponseType<EntityCompletelyListItemType>>(
+        ApiPathEnum.GetRepository, requestBody)
+      .toPromise();
+  }
 }

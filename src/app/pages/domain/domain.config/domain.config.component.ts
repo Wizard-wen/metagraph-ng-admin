@@ -41,6 +41,13 @@ export class DomainConfigComponent implements OnInit {
     if (isEdit) {
       title = '编辑';
     }
+
+    let parentName = '';
+    if (params) {
+      parentName = params?.name;
+    } else {
+      parentName = '顶层领域';
+    }
     const modalReference = this.modalService.create({
       nzWidth: 750,
       nzTitle: `${title}领域`,
@@ -48,11 +55,12 @@ export class DomainConfigComponent implements OnInit {
       nzMaskClosable: false,
       nzClosable: false,
       nzComponentParams: {
+        type: isEdit ? 'edit' : 'create',
         domainId: params?.id,
         domain: params,
-        domainBaseTypeId: params?.domainBaseTypeId,
+        domainBaseTypeId: params?.domainBaseTypeId ?? this.domainBaseTypeId,
         parentId: params?.id,
-        parentName: isEdit ? params?.name : '顶层领域'
+        parentName
       }
     });
 
@@ -83,6 +91,9 @@ export class DomainConfigComponent implements OnInit {
       nzTitle: '确定要删除这个领域吗?',
       nzOnOk: async () => {
         await this.domainApiService.removeDomain({ domainId: item.id });
+        if (this.domainBaseTypeId) {
+          await this.getDetail(this.domainBaseTypeId);
+        }
       }
     });
   }

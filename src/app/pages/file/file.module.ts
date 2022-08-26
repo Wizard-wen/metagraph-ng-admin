@@ -5,6 +5,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
@@ -22,6 +23,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { NgxJsonViewModule } from 'ng-json-view';
+import { FileSizePipe } from '../../common/pipes/file-size.pipe';
 import { FileRoutingModule } from './file.routing.module';
 import { FileComponent } from './file.component';
 import { FileListComponent } from './list/file.list.component';
@@ -47,8 +49,9 @@ const nzModules = [
 ];
 
 @NgModule({
-  imports: [FileRoutingModule, ...nzModules, CommonModule, NgxJsonViewModule],
+  imports: [FileRoutingModule, ...nzModules, CommonModule, NgxJsonViewModule, FormsModule],
   declarations: [
+    FileSizePipe,
     FileComponent,
     FileListComponent,
     FileUploadDialogComponent,

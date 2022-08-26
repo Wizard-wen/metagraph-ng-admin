@@ -41,4 +41,22 @@ export class UserApiService {
       .post<PublicApiResponseType<void>>(ApiPathEnum.GetUserList, requestBody)
       .toPromise();
   }
+
+  async getUserDetailById(requestBody: {
+    userId: string;
+  }): Promise<PublicApiResponseType<{
+      user: UserModelType,
+      file: {
+        total: number
+      }
+    }>> {
+    return this.http
+      .post<PublicApiResponseType<{
+      user: UserModelType,
+      file: {
+        total: number
+      }
+    }>>(ApiPathEnum.GetUserDetail, requestBody)
+      .toPromise();
+  }
 }

@@ -1,6 +1,7 @@
 <button nz-button (click)="addChildDomain()">添加顶级领域</button>
 <nz-tree
   #nzTreeComponent
+  nzExpandAll
   [nzData]="domainTree"
   (nzClick)="handleTreeNodeClickEvent($event)"
   [nzCheckedKeys]="defaultCheckedKeys"

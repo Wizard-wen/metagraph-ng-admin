@@ -4,7 +4,7 @@
  */
 
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import type { FileResponseType } from 'metagraph-constant';
+import type { FileModelType } from 'metagraph-constant';
 import { FileApiService } from '../../../../api.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class FilePreviewDialogComponent implements OnInit {
   @Input()
   id: string | undefined;
 
-  file: FileResponseType | undefined;
+  file: FileModelType | undefined;
 
   isLoading = false;
 

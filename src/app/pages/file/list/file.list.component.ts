@@ -5,7 +5,8 @@
 
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import type { FileResponseType } from 'metagraph-constant';
+import { FileEnum, FileProvider, fileProviderList } from 'metagraph-constant';
+import type { FileModelType } from 'metagraph-constant';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { FileApiService } from '../../../api.service';
@@ -19,7 +20,42 @@ import { FileItemType } from '../../../common/type';
   styleUrls: ['./file.list.component.scss']
 })
 export class FileListComponent implements AfterViewInit {
-  fileList: FileResponseType[] = [];
+  fileList: FileModelType[] = [];
+
+  widthConfig = ['15%', '8%', '8%', '7%', '18%', '8%', '12%', '18%'];
+
+  userId?: string;
+
+  provider?: FileProvider;
+
+  accountType?: 'user' | 'admin';
+
+  fileType?: 'text' | 'image' | 'video' | 'zip' | 'audio' | 'json';
+
+  fileTypeList = [
+    { label: 'text', value: 'text' },
+    { label: 'image', value: 'image' },
+    { label: 'video', value: 'video' },
+    { label: 'zip', value: 'zip' },
+    { label: 'audio', value: 'audio' },
+    { label: 'json', value: 'json' }
+  ];
+
+  providerList = fileProviderList.map((item: string) => ({
+    value: item,
+    label: item
+  }));
+
+  userTypeList = [
+    {
+      value: 'user',
+      label: '用户'
+    },
+    {
+      value: 'admin',
+      label: '管理员'
+    }
+  ];
 
   isLoading = false;
 
@@ -41,12 +77,25 @@ export class FileListComponent implements AfterViewInit {
   ) {
   }
 
+  async searchFileList() {
+    await this.setFileList();
+  }
+
+  clear() {
+    this.provider = undefined;
+    this.accountType = undefined;
+    this.userId = undefined;
+  }
+
   async setFileList(): Promise<void> {
     this.isLoading = true;
     this.changeDetectorRef.detectChanges();
     const response = await this.fileService.getFilePageList({
       pageIndex: this.pageIndex - 1,
-      pageSize: this.pageSize
+      pageSize: this.pageSize,
+      provider: this.provider,
+      accountType: this.accountType,
+      userId: this.userId
     });
     if (response.data) {
       this.fileList = response.data.list;
@@ -89,6 +138,10 @@ export class FileListComponent implements AfterViewInit {
   }
 
   openTestFileIsExistsDialog(data: FileItemType) {
+    if (!data.key) {
+      this.messageService.create('info', 'file key不存在！');
+      return;
+    }
     this.modalService.confirm({
       nzTitle: '测试这个文件?',
       nzOnOk: async () => {

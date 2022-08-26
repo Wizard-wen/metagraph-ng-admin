@@ -32,6 +32,9 @@ export class DomainAddModalComponent implements OnInit {
   @Input()
   domain?: DomainModelType;
 
+  @Input()
+  type!: 'edit' | 'create';
+
   kitForm = this.formBuilder.group({
     name: ['', [Validators.required]],
     description: ['', [Validators.required]],
@@ -64,7 +67,7 @@ export class DomainAddModalComponent implements OnInit {
       this.messageService.create('error', '请补全表单');
       return;
     }
-    if (this.domainId) {
+    if (this.type === 'edit') {
       await this.updateKit();
     } else {
       await this.createKit();
@@ -102,7 +105,7 @@ export class DomainAddModalComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.domainId && this.domain) {
+    if (this.domainId && this.domain && this.type === 'edit') {
       this.kitForm.patchValue({
         name: this.domain.name,
         description: this.domain.description,
