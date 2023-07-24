@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "towify-editor-cms": {
+    "metagraph-ng-admin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/towify-editor-cms",
+            "outputPath": "dist/metagraph-ng-admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,18 +72,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "towify-editor-cms:build"
+            "browserTarget": "metagraph-ng-admin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "towify-editor-cms:build:production"
+              "browserTarget": "metagraph-ng-admin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "towify-editor-cms:build"
+            "browserTarget": "metagraph-ng-admin:build"
           }
         },
         "test": {
@@ -120,16 +120,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "towify-editor-cms:serve"
+            "devServerTarget": "metagraph-ng-admin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "towify-editor-cms:serve:production"
+              "devServerTarget": "metagraph-ng-admin:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "towify-editor-cms"
+  "defaultProject": "metagraph-ng-admin",
+  "cli": {
+    "analytics": "157648a5-842c-4cc5-aded-0098a81ff92b"
+  }
 }
